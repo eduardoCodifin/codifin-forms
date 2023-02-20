@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Ejemplo from './components/Ejemplo'
+import Form from './components/Form'
 
 function App() {
 
@@ -7,7 +8,8 @@ function App() {
 
   return (
     <div>
-      <Ejemplo/>
+      <h1>Cuestionario Perfiles</h1>
+      <Form/>
     </div>
   )
 }
