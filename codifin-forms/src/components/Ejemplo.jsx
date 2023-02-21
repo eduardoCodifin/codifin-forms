@@ -9,3 +9,14 @@ const Ejemplo = () => {
 }
 
 export default Ejemplo
+
+const questions=[
+    {
+        titilo: "what is relevant for you",
+        Options:[
+        { textoRespuesta: "protecion", isCorrect: false},
+        { textoRespuesta: "protction", isCorrect: true},
+        { textoRespuesta: "other", isCorrect: false},
+        ]
+    },
+]
