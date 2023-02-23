@@ -8,14 +8,14 @@ const AnswerContent = (props) => {
     let answersArray = questions.map(element=> {if(element.id==props.id) return element.answers} );
     answersArray = answersArray.filter(elem=>elem!==undefined);
     if(answersArray.length ==0){
-      return <input type ="text" />
+      return <input type ="text" id={'answer'+props.id}/>
     }
 
     else{
       return(
         <ul>
         {
-            answersArray[0].map(ans=> <OptionalAnswer answer={ans} id={props.id}/>) 
+            answersArray[0].map(ans=> <OptionalAnswer answer={ans} id={'answer'+props.id}/>) 
         }
         </ul>
       )
