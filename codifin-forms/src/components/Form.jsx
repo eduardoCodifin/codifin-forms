@@ -6,11 +6,9 @@ import { questions } from '../data/questions'
 
 const Form = () => {
     const [id, setId] = useState(1);
-    const numberQuestions = questions.length;
+    const [answers, setAnswer] = useState({});
 
-    useEffect(()=>{
-       
-    },[id]);
+    const numberQuestions = questions.length;
  
     const previousHandler=()=>{
         setId((prev)=>prev-1)
@@ -19,37 +17,37 @@ const Form = () => {
         setId((prev)=>prev+1)
     };
 
+
+    const handleSubmit=(event)=>{
+        event.preventDefault();
+        console.log('Formulario enviado');
+        console.log(answers);
+    };
     // ¿Está en la primera pregunta?-> Deshabilita previous
-    var first;
-    if(id===1){
-        first=true;
-    }
-    else{
-        first= false;
-    }
+    var first; 
+    id === 1 ? first = true: first = false;
+    
 
     // ¿Está en la última pregunta?-> Deshabilita next
     var last;
-    if(id=== numberQuestions){
-        last=true;
-    }
-    else{
-        last= false;
-    }
+    id == numberQuestions ? last = true: last = false;
 
 
    return (
    
     <div>
         <h2>Pregunta {id}/{numberQuestions}</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
             <Question id={id}/>
             <AnswerContent id={id}/>
+            <SubmitSection id={id} numberQuestions = {numberQuestions}/>
+            <button onClick={previousHandler} style={{display: first ? 'none' : 'block'}}>Previous</button>
+            <button onClick={nextHandler} style={{display: last? 'none' : 'block'}}>Next</button>
         </form>
-        <button onClick={previousHandler} disabled={first}>Previous</button>
-        <button onClick={nextHandler} disabled={last}>Next</button>
+        
         <br></br>
-        <SubmitSection id={id} numberQuestions = {numberQuestions}/>
+        
+
     </div>
 
   )
