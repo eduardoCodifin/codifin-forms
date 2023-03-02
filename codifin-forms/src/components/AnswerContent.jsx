@@ -13,23 +13,45 @@ const AnswerContent = (props) => {
       answer: e.target.value
     })
   }
+  const setSelectedAns =(data)=>{
+    setAns(data)
+  }
+
+  const allFunctionsNext =()=>{
+    props.setData(ans)
+    props.nextHandler();
+    
+  };
 
     //Answers logic 
     let answersArray = questions.map(element=> {if(element.id==props.id) return element.answers} );
     answersArray = answersArray.filter(elem=>elem!==undefined);
 
-    if(answersArray.length ==0){
-      return <input type ="text" id={'answer'+props.id} onChange={handleChange} required/>
+    if(answersArray.length == 0){
+      return( 
+        <div>
+          <input type ="text" id={'answer'+props.id} onChange={handleChange} required/>
+          <input onClick={props.previousHandler}  style={{display: props.first ? 'none' : 'block'}} type='submit' value="Previous"></input>
+          <input onClick={allFunctionsNext} style={{display: props.last? 'none' : 'block'}} type='submit' value="Next"></input>
+        </div>
+      )
+      
     }
 
     else{
       return(
-        <ul>
-        {
-            answersArray[0].map((ans, index)=> <OptionalAnswer answer={ans} id={props.id} key={index} />) 
-      
-        }
-        </ul>
+        <div>
+          <ul>
+          {
+              answersArray[0].map((ans, index)=> <OptionalAnswer answer={ans} id={props.id} key={index} setSelectedAns={setSelectedAns}/>) 
+          }
+          </ul>
+          <input onClick={props.previousHandler} style={{display: props.first ? 'none' : 'block'}} type='submit' value="Previous"></input>
+          <input onClick={allFunctionsNext} style={{display: props.last? 'none' : 'block'}} type='submit' value="Next"></input>
+          
+
+        </div>
+
       )
     }
 

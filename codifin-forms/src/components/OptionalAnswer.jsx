@@ -3,24 +3,27 @@ import { questions } from '../data/questions'
 
 function OptionalAnswer(props) {
 
-  const [ans, setAns] = useState({});
+  const [opAns, setOpAns] = useState({});
 
   const handleChange =(e)=>{
-    setAns(
+    setOpAns(
       {
         id: props.id,
         questions: questions[props.id-1].question,
         answer: e.target.value
       }
     );
+
+    
   }
-  /*useEffect(() => {
-    console.log(ans)
-  },[ans]);*/
+  useEffect(() => {
+    props.setSelectedAns(opAns);
+  },[opAns]);
+  
   return (
     <div key={props.id}>
       <label>{props.answer}</label>
-      <input type="radio" name={props.id} onChange={handleChange} required={true} value={props.answer}/>
+      <input type="radio" name={props.id} onChange={handleChange} required value={props.answer}/>
     </div>
   );
 }

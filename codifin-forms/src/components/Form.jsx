@@ -6,10 +6,17 @@ import { questions } from '../data/questions'
 
 const Form = () => {
     const [id, setId] = useState(1);
-    const [answers, setAnswer] = useState({});
+    const [answers, setAnswer] = useState([]);
 
     const numberQuestions = questions.length;
+
+     useEffect(() => {
+        console.log(answers)
+    },[id]);
  
+    const setData = (data)=>{
+        setAnswer((prev)=>[...prev, data]);
+    };
     const previousHandler=()=>{
         setId((prev)=>prev-1)
     };
@@ -39,10 +46,9 @@ const Form = () => {
         <h2>Pregunta {id}/{numberQuestions}</h2>
         <form onSubmit={handleSubmit}>
             <Question id={id}/>
-            <AnswerContent id={id}/>
+            <AnswerContent id={id} setData = {setData} previousHandler={previousHandler} nextHandler={nextHandler}
+            first={first} last={last}/>
             <SubmitSection id={id} numberQuestions = {numberQuestions}/>
-            <button onClick={previousHandler} style={{display: first ? 'none' : 'block'}}>Previous</button>
-            <button onClick={nextHandler} style={{display: last? 'none' : 'block'}}>Next</button>
         </form>
         
         <br></br>
