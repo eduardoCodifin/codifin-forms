@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import Ejemplo from './components/Ejemplo'
+import Form from './components/Form'
+import './components/index.css';
 
 function App() {
 
 // Archivo principal que renderizara otros componentes hijos
 
   return (
-    <div>
-      <Ejemplo/>
+    <div class="principal">
+      <Form/>
     </div>
   )
 }
