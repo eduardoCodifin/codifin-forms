@@ -15,7 +15,17 @@ const Form = () => {
     },[id]);
  
     const setData = (data)=>{
-        setAnswer((prev)=>[...prev, data]);
+        let answered = false;
+       answers.forEach(ansObj=>{
+            if(ansObj.id === data.id){
+                answered = true;
+              //  setAnswer(answers[])
+            }
+        });
+        if(!answered){
+            setAnswer((prev)=>[...prev, data]);
+        }
+        
     };
     const previousHandler=()=>{
         setId((prev)=>prev-1)
