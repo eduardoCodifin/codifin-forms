@@ -4,35 +4,69 @@ import OptionalAnswer from './OptionalAnswer';
 
 const AnswerContent = (props) => {
 
+  const {id, setData, previousHandler, nextHandler, first, last, setIsFilled, answers, isFilled, setBackPressed, backPressed} = props;
   const [ans, setAns] = useState({});
  
   const handleChange=(e)=>{
-    setAns({
-      id: props.id,
-      questions: questions[props.id-1].question,
-      answer: e.target.value
-    })
+
+    if (!backPressed) {
+      setAns({
+        id: id,
+        questions: questions[props.id-1].question,
+        answer: e.target.value
+      })
+      setBackPressed(false);
+    }
+
+   
+
+    setIsFilled(true);
+
   }
+
+
+
+
+
   const setSelectedAns =(data)=>{
     setAns(data)
   }
 
-  const allFunctionsNext =()=>{
-    props.setData(ans)
-    props.nextHandler();
-    
+  const showNextQuestion =()=>{
+
+    if (isFilled) {
+      setData(ans)
+      nextHandler();
+      setIsFilled(false);
+
+    }
+    else{
+      alert("Please answer the question");
+    }
+ 
   };
 
+
+
+  
+
     //Answers logic 
-    let answersArray = questions.map(element=> {if(element.id==props.id) return element.answers} );
+    let answersArray = questions.map(element=> {if(element.id==id) return element.answers} );
     answersArray = answersArray.filter(elem=>elem!==undefined);
 
     if(answersArray.length == 0){
       return( 
         <div>
-          <input type ="text" id={'answer'+props.id} onChange={handleChange} required/>
-          <input onClick={props.previousHandler}  style={{display: props.first ? 'none' : 'block'}} type='submit' value="Previous"></input>
-          <input onClick={allFunctionsNext} style={{display: props.last? 'none' : 'block'}} type='submit' value="Next"></input>
+          {/*   input enter text  */}
+          <input type="text" id={'answer'+id} onChange={handleChange} required/>
+
+          <button onClick={previousHandler}  style={{display: first ? 'none' : 'block'}}>
+            Previous
+          </button>
+          <button onClick={showNextQuestion} style={{display: last? 'none' : 'block'}}>
+            Next
+          </button>
+          
         </div>
       )
       
@@ -43,11 +77,18 @@ const AnswerContent = (props) => {
         <div>
           <ul>
           {
-              answersArray[0].map((ans, index)=> <OptionalAnswer answer={ans} id={props.id} key={index} setSelectedAns={setSelectedAns}/>) 
+              answersArray[0].map((ans, index)=> <OptionalAnswer answer={ans} id={id} key={index} setSelectedAns={setSelectedAns} setIsFilled={setIsFilled} backPressed={backPressed} setBackPressed={setBackPressed}/>) 
           }
           </ul>
-          <input onClick={props.previousHandler} style={{display: props.first ? 'none' : 'block'}} type='submit' value="Previous"></input>
-          <input onClick={allFunctionsNext} style={{display: props.last? 'none' : 'block'}} type='submit' value="Next"></input>
+
+          <button onClick={previousHandler} style={{display: first ? 'none' : 'block'}}>
+            Previous
+          </button>
+
+          <button onClick={showNextQuestion} style={{display: last? 'none' : 'block'}}>
+            Next
+          </button>
+
           
 
         </div>

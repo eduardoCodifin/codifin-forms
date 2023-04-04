@@ -7,6 +7,9 @@ import { questions } from '../data/questions'
 const Form = () => {
     const [id, setId] = useState(1);
     const [answers, setAnswer] = useState([]);
+    const [isFilled, setIsFilled] = useState(false);
+    const [backPressed, setBackPressed] = useState(false);
+    //console.log(answers.length)
 
     const numberQuestions = questions.length;
 
@@ -15,31 +18,35 @@ const Form = () => {
     },[id]);
  
     const setData = (data)=>{
-        let answered = false;
-       answers.forEach(ansObj=>{
-            if(ansObj.id === data.id){
-                answered = true;
-              //  setAnswer(answers[])
-            }
-        });
-        if(!answered){
-            setAnswer((prev)=>[...prev, data]);
-        }
-        
+     
+        setAnswer((prev)=>[...prev, data]);
+              
     };
+
     const previousHandler=()=>{
+
         setId((prev)=>prev-1)
+        setBackPressed(true);
+
     };
-    const nextHandler=()=>{
-        setId((prev)=>prev+1)
+
+    const nextHandler = () => {
+
+        //isFilled ? setId((prev)=>prev+1) : alert('Please answer the question');
+       setId((prev)=>prev+1);
+
     };
 
 
     const handleSubmit=(event)=>{
         event.preventDefault();
-        console.log('Formulario enviado');
-        console.log(answers);
+        if(answers.length == numberQuestions){
+            console.log('Formulario enviado');
+            console.log(answers);
+        }
+
     };
+
     // ¿Está en la primera pregunta?-> Deshabilita previous
     var first; 
     id === 1 ? first = true: first = false;
@@ -49,6 +56,10 @@ const Form = () => {
     var last;
     id == numberQuestions ? last = true: last = false;
 
+    useEffect(() => {
+     console.log("backPressed: ", backPressed)
+    }, [backPressed]);
+
 
    return (
    
@@ -57,7 +68,7 @@ const Form = () => {
         <form onSubmit={handleSubmit}>
             <Question id={id}/>
             <AnswerContent id={id} setData = {setData} previousHandler={previousHandler} nextHandler={nextHandler}
-            first={first} last={last}/>
+            first={first} last={last} setIsFilled={setIsFilled} isFilled={isFilled} answers={answers} backPressed={backPressed} setBackPressed={setBackPressed}/>
             <SubmitSection id={id} numberQuestions = {numberQuestions}/>
         </form>
         

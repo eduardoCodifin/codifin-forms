@@ -2,28 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { questions } from '../data/questions'
 
 function OptionalAnswer(props) {
+  const {id, answer,setSelectedAns, setIsFilled, setBackPressed, backPressed } = props;
 
   const [opAns, setOpAns] = useState({});
 
   const handleChange =(e)=>{
-    setOpAns(
-      {
-        id: props.id,
-        questions: questions[props.id-1].question,
-        answer: e.target.value
-      }
-    );
 
+      setOpAns(
+        {
+          id: id,
+          questions: questions[props.id-1].question,
+          answer: e.target.value
+        }
+      );
+
+    setBackPressed(false);
+    setIsFilled(true);
     
   }
   useEffect(() => {
-    props.setSelectedAns(opAns);
+    setSelectedAns(opAns);
   },[opAns]);
   
   return (
-    <div key={props.id}>
-      <label>{props.answer}</label>
-      <input type="radio" name={props.id} onChange={handleChange} required value={props.answer}/>
+    <div key={id}>
+      <label>{answer}</label>
+      <input type="radio" name={id} onChange={handleChange} required value={answer}/>
     </div>
   );
 }
